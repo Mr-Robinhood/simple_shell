@@ -1,14 +1,11 @@
 #include "shell.h"
-
 /**
  * main - the main shell code
- *
  * applies the functions in utils and helpers
  * implements EOF
  * Prints error on Failure
  * Return: nothing.
  */
-
 int main(void)
 {
 	char *line = NULL;
@@ -48,10 +45,7 @@ int main(void)
 		arr[i] = NULL;
 		execute(line, arr);
 		for (j = 0; j < i; j++)
-		{
 			free(arr[j]);
-		}
 	}
 	free(line);
-	return (0);
 }
