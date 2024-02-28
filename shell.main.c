@@ -4,7 +4,7 @@
  * applies the functions in utils and helpers
  * implements EOF
  * Prints error on Failure
- * Return: nothing.
+ * Return: Nothing.
  */
 int main(void)
 {
@@ -15,6 +15,7 @@ int main(void)
 	ssize_t l = 0;
 	char *arr[MAX_ARGS] = {NULL};
 	char *token;
+	int status = 0;
 
 	while (1)
 	{
@@ -48,4 +49,5 @@ int main(void)
 			free(arr[j]);
 	}
 	free(line);
+	return (status);
 }
