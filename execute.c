@@ -11,18 +11,18 @@
 void execute(char *line, char **arr)
 {
 
-	pid_t  id;
+        pid_t  id;
 
-	id = fork();
+        id = fork();
 
-	if (id == 0)
-	{
-		execve(line, arr, NULL);
-	}
-	else
-	{
+        if (id == 0)
+        {
+                execve(line, arr, NULL);
+        }
+        else
+        {
 
-		wait(NULL);
-	}
+                wait(NULL);
+        }
 
 }

@@ -26,8 +26,8 @@ int main(void)
 		l = getline(&line, &n, stdin);
 		if (l == -1)
 		{
-			printf("./hsh: 1 : %s : not found\n", line);
-			break;
+			 printf("%s: command not found\n", line);
+           			 return (-1);
 		}
 		i = 0;
 		token = strtok(line, " \t\n");
