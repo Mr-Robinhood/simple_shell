@@ -12,7 +12,10 @@
 #include <dirent.h>
 #include <signal.h>
 
-void execute(char *line, char **arr);
+
+void execmd(char **argv);
+char *get_location(char *command);
+
 
 #define MAX_ARGS 128
 #endif /*SHELL_H*/
