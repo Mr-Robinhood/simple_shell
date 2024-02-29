@@ -1,74 +1,60 @@
 #include "shell.h"
 
-int main(int ac, char **argv)
+		char **commands = NULL;
+      	 	char *line = NULL;
+       		char *shell_name = NULL;
+       		int status = 0;
+/**
+ * main - the main shell code
+ * @argc: number of arguments passed
+ * @argv: program arguments to be parsed
+ *
+ * applies the functions in utils and helpers
+ * implements EOF
+ * Prints error on Failure
+ * Return: 0 on success
+ */
+
+
+int main(int argc __attribute__((unused)), char **argv)
 {
-    char *prompt = "$ ";
-    char *lineptr = NULL, *lineptr_copy = NULL;
-    size_t n = 0;
-    ssize_t nchars_read;
-    const char *delim = " \n";
-    int num_tokens = 0;
-    char *token;
-    int i;
 
-    /* declaring void variables */
-    (void)ac;
+	char **current_command = NULL;
+	int i, type_command = 0;
+	size_t n = 0;
 
-    /* Create a loop for the shell's prompt */
-    while (1)
-    {
-        printf("%s", prompt);
-        nchars_read = getline(&lineptr, &n, stdin);
-        /* check if the getline function failed or reached EOF or user use CTRL + D */
-        if (nchars_read == -1)
-        {
-            printf("Exiting shell....\n");
-            return (-1);
-        }
+	signal(SIGINT, ctrl_c_handler);
+	shell_name = argv[0];
+	while (1)
+	{
+		non_interactive();
+		print("$ ", STDOUT_FILENO);
+		if (getline(&line, &n, stdin) == -1)
+		{
+			free(line);
+			exit(status);
+		}
+			remove_newline(line);
+			remove_comment(line);
+			commands = tokenizer(line, ";");
 
-        /* allocate space for a copy of the lineptr */
-        lineptr_copy = malloc(sizeof(char) * nchars_read);
-        if (lineptr_copy == NULL)
-        {
-            perror("tsh: memory allocation error");
-            return (-1);
-        }
-        /* copy lineptr to lineptr_copy */
-        strcpy(lineptr_copy, lineptr);
+		for (i = 0; commands[i] != NULL; i++)
+		{
+			current_command = tokenizer(commands[i], " ");
+			if (current_command[0] == NULL)
+			{
+				free(current_command);
+				break;
+			}
+			type_command = parse_command(current_command[0]);
 
-        /********** split the string (lineptr) into an array of words ********/
-        /* calculate the total number of tokens */
-        token = strtok(lineptr, delim);
+		
+			initializer(current_command, type_command);
+			free(current_command);
+		}
+		free(commands);
+	}
+	free(line);
 
-        while (token != NULL)
-        {
-            num_tokens++;
-            token = strtok(NULL, delim);
-        }
-        num_tokens++;
-
-        /* Allocate space to hold the array of strings */
-        argv = malloc(sizeof(char *) * num_tokens);
-
-        /* Store each token in the argv array */
-        token = strtok(lineptr_copy, delim);
-
-        for (i = 0; token != NULL; i++)
-        {
-            argv[i] = malloc(sizeof(char) * strlen(token));
-            strcpy(argv[i], token);
-
-            token = strtok(NULL, delim);
-        }
-        argv[i] = NULL;
-
-        /* execute the command */
-        execmd(argv);
-    }
-
-    /* free up allocated memory */
-    free(lineptr_copy);
-    free(lineptr);
-
-    return (0);
-}
+	return (status);
+}	
