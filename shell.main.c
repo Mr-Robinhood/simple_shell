@@ -1,9 +1,9 @@
 #include "shell.h"
 
 		char **commands = NULL;
-      	 	char *line = NULL;
-       		char *shell_name = NULL;
-       		int status = 0;
+		char *line = NULL;
+		char *shell_name = NULL;
+		int status = 0;
 /**
  * main - the main shell code
  * @argc: number of arguments passed
@@ -48,7 +48,6 @@ int main(int argc __attribute__((unused)), char **argv)
 			}
 			type_command = parse_command(current_command[0]);
 
-		
 			initializer(current_command, type_command);
 			free(current_command);
 		}
@@ -57,4 +56,4 @@ int main(int argc __attribute__((unused)), char **argv)
 	free(line);
 
 	return (status);
-}	
+}

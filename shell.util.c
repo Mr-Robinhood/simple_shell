@@ -1,20 +1,12 @@
 #include "shell.h"
 
 /**
- * Auth: Emma Udeji
- * 		 Pericles Adjovi
- *
- * Description:
- * the extended functions for main.c
- */
-
-
-/** parse_command - determines the type of the command
+ * parse_command - determines the type of the command
  * @command: command to be parsed
  *
  * Return: constant representing the type of the command
  * Description -
- * 		 EXTERNAL_COMMAND (1) represents commands like /bin/ls
+ *		EXTERNAL_COMMAND (1) represents commands like /bin/ls
  *		 INTERNAL_COMMAND (2) represents commands like exit, env
  *		 PATH_COMMAND (3) represents commands found in the PATH like ls
  *		 INVALID_COMMAND (-1) represents invalid commands
@@ -36,7 +28,6 @@ int parse_command(char *command)
 		if (_strcmp(command, internal_command[i]) == 0)
 			return (INTERNAL_COMMAND);
 	}
-	/* @check_path - checks if a command is found in the PATH */
 	path = check_path(command);
 	if (path != NULL)
 	{
